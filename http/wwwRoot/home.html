@@ -1,38 +1,89 @@
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html> 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <style>
 body{font-size:medium;line-height:1.6em;background:#f0f0f0;margin:1;}
 div{margin-bottom:1em;text-align:left}
 a{white-space:nowrap;}
 </style>
 
+<script src="./jquery-3.3.1.js"></script>
+<script>
+   function DateSub()
+  {
+     var SY2=$("#SY2").val();
+     var SM2=$("#SM2").val();
+     var SD2=$("#SD2").val();
+     var SY3=$("#SY3").val();
+     var SM3=$("#SM3").val();
+     var SD3=$("#SD3").val();
+     var formdata=new FormData();
+     formdata.append("year1&",SY2);
+     formdata.append("month1&",SM2);
+     formdata.append("day1&",SD2);
+     formdata.append("year2&",SY3);
+     formdata.append("month1&",SM3);
+     formdata.append("day2&",SD3);
+    //  var formdata =  $("#table1").formSerialize().val();
+   //   console.log("123");
+      $.ajax({
+        url: './cgi/dateSub',
+        type: 'POST',
+        data: formdata,
+//        data:{"year1 = "}
+        processData:false,
+        contentType:false,
+        success:function(resp)
+        {
+//            console.log(resp);
+            $("#result1").html(resp);
+         }
 
+      })
+  //    console.log("over");
+  }
+</script>
+
+<script>
+   function UpDate()
+  {
+     var SY=$("#SY").val();
+     var SM=$("#SM").val();
+     var SD=$("#SD").val();
+     var Day=$("#Day").val();
+     var formdata=new FormData();
+     formdata.append("year3&",SY);
+     formdata.append("month3&",SM);
+     formdata.append("day3&",SD);
+     formdata.append("decDay&",Day);
+      $.ajax({
+        url: './cgi/dateAfter',
+        type: 'POST',
+        data: formdata,
+        processData:false,
+        contentType:false,
+        success:function(resp)
+        {
+            $("#result2").html(resp);
+         }
+      })
+  }
+</script>
 
 
 <title>日期计算器</title>
+</head>
 
-<script type="text/javascript" ></script>
-        </meta>
-
-        <body bgcolor=eeeeee >
-
+<body bgcolor=eeeeee >
     <div>
-
-        <form action="/cgi/dateSub" method="GET">
-
         <big>日期计算</big>
-        -
-        <a href=../>返回首页</a>
-        </div>
-
-    <div>
-        <div>
-        <b>计算两个日期之间差多少天</b>
-        <br>
-
-        　　<input type="text" name="year1" size=6 id=SY2 value=2018>年
+    </div>
+    <from id="table1">
+        
+    <b>计算两个日期之间差多少天</b>
+        <br>    
+            <input type="text" name="year1" size=6 id=SY2 value=2018>年
         <input type="text" name="mon1" size=3 id=SM2 value=8>月
         <input type="text" name="day1" size=3 id=SD2 value=15>日（默认今天）
         <br>
@@ -40,12 +91,11 @@ a{white-space:nowrap;}
         <input type="text" name="mon2" size=3 id=SM3 value=1>月
         <input type="text" name="day2" size=3 id=SD3 value=1>日
         <br>相差：
-        <span id=result2></span>天
+        <span id=result1>0</span>天
         <br>
-        <input type=submit value="计算">
+        <input type=submit onclick="DateSub()" value="计算">
         <br>
         </br>
-        <br>
         </div>
 
       <div style="text-align:left;width:100%">
@@ -54,12 +104,12 @@ a{white-space:nowrap;}
             　　<input name="year3" type="text" size=6 id=SY value=2018>年
             <input name="mon3" type="text" size=3 id=SM value=8>月
             <input name="day3" type="text" size=3 id=SD value=15>日（默认今天）
-            <br>往后<input name="yy" type="text" size=6 id=decday value=100>天
+            <br>往后<input name="decDay" type="text" size=6 id=Day value=100>天
             （输入负数则往前计算）
             <br>是：
-            <span id=result1></span>
+            <span id=result2>0</span>
             <br>
-            <input type=submit value="计算" formaction="">
+            <input type=submit onclick = "UpDate()" value="计算" formaction="">
 
             <br><br>
         </div>
@@ -67,12 +117,7 @@ a{white-space:nowrap;}
         </form>
         <br>
             →<a href=http://www.baidu.com>去百度</a>
-            <input type=submit value="数字的四则计算" formaction="index.html">
             </br>
-    <script>
-        loadold();
-    </script>
-
 
     <br>
     <br>
@@ -97,6 +142,3 @@ a{white-space:nowrap;}
     </center>
     </body>
     </html>
-
-
-

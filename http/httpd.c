@@ -97,7 +97,7 @@ void clear_header(int sock)
 {
     char line[MAX];
    do {
-     //   printf("%s",line);
+       printf("%s",line);
         get_line(sock,line,sizeof(line));
     }while(strcmp(line,"\n") != 0);
 
@@ -435,7 +435,7 @@ void* handle_request(void *arg)
                 cgi = 1;
             }
         }
-        printf("method:%s,path:%s\n",method,path);
+      //  printf("method:%s,path:%s\n",method,path);
         if(cgi == 1)
         {
     //        printf("BBBBBBBBBB\n");
